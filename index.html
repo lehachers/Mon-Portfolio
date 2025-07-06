@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🗣️Portfolio</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --bg-secondary: #1e222d;
+      --text: #f5f5f5;
+      --accent: #4fc3f7;
+      --card: #2a2f3c;
+    }
+    body.light {
+      --bg: #ffffff;
+      --bg-secondary: #f0f0f0;
+      --text: #111;
+      --accent: #03a9f4;
+      --card: #e0e0e0;
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', sans-serif;
+      transition: 0.3s ease;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(-100px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: var(--bg-secondary);
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      flex-wrap: wrap;
+    }
+
+    header nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    header nav a {
+      color: var(--text);
+      text-decoration: none;
+      margin: 0 10px;
+      font-weight: 500;
+      transition: color 0.3s;
+      opacity: 0;
+      animation: slideIn 0.6s forwards;
+    }
+
+    header nav a:nth-child(1) { animation-delay: 0s; }
+    header nav a:nth-child(2) { animation-delay: 0.1s; }
+    header nav a:nth-child(3) { animation-delay: 0.2s; }
+
+    header nav a.active {
+      color: var(--accent);
+      border-bottom: 2px solid var(--accent);
+    }
+
+    .center-buttons {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .btn {
+      padding: 8px 15px;
+      border-radius: 20px;
+      background: var(--accent);
+      color: black;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .section {
+      padding: 120px 40px 80px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .projects {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .project-card {
+      background: var(--card);
+      padding: 20px;
+      border-radius: 10px;
+      display: none;
+    }
+
+    .project-card.show {
+      display: block;
+    }
+
+    .project-card h3 {
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .filters {
+      text-align: center;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .filters button {
+      margin: 0 10px;
+      padding: 8px 15px;
+      background: transparent;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .filters button.active {
+      background: var(--accent);
+      color: black;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #999;
+    }
+
+    /* Section Contact */
+    .contact-section {
+      margin-top: auto;
+      padding: 40px 20px;
+      text-align: center;
+      background-color: #161b22;
+    }
+
+    .contact-section h2 {
+      margin-bottom: 20px;
+      font-size: 28px;
+      color: #4fc3f7;
+    }
+
+    .btn-blue {
+      display: inline-block;
+      padding: 14px 36px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      border: none;
+      border-radius: 30px;
+      box-shadow: 0 8px 15px rgba(0, 242, 254, 0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      position: relative;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .btn-blue::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: rgba(255, 255, 255, 0.15);
+      transform: rotate(45deg);
+      transition: all 0.5s ease;
+      pointer-events: none;
+      border-radius: 50%;
+    }
+
+    .btn-blue:hover::before {
+      top: 0;
+      left: 0;
+    }
+
+    .btn-blue:hover {
+      background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+      box-shadow: 0 12px 20px rgba(0, 242, 254, 0.6);
+      transform: translateY(-4px);
+    }
+
+    .btn-blue:active {
+      transform: scale(0.95);
+      box-shadow: 0 6px 10px rgba(0, 242, 254, 0.4);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px 20px;
+      }
+
+      .center-buttons {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      header nav {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+      }
+
+      header nav a {
+        margin: 5px 0;
+      }
+
+      .filters button {
+        margin: 5px 5px;
+      }
+      /* Ajoute juste après le bloc @media existant à la fin du style */
+@media (max-width: 1024px) {
+  .section {
+    padding: 100px 20px 60px;
+  }
+
+  .projects {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .project-card {
+    padding: 15px;
+  }
+
+  .contact-section h2 {
+    font-size: 24px;
+  }
+
+  .btn-blue {
+    font-size: 16px;
+    padding: 12px 30px;
+  }
+
+  .btn {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  body, html {
+    word-wrap: break-word;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, p {
+    max-width: 100%;
+    overflow-wrap: break-word;
+  }
+}
+.section {
+  padding: 120px 40px 80px;
+  max-width: 1000px;
+  margin: auto;
+  width: 100%; /* Ajout important pour le responsive */
+}
+.section:first-of-type {
+  padding-top: 200px; /* laisse la place au header fixé */
+}
+
+    }
+
+  </style>
+</head>
+<body>
+
+<header>
+  <nav id="nav">
+    <a href="#home" class="active">Accueil</a>
+    <a href="#projects">Projets</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div class="center-buttons">
+    <button class="btn" onclick="toggleTheme()">🌗 Clair / Sombre</button>
+  </div>
+</header>
+
+<section id="home" class="section" data-fr="Accueil" data-en="Home">
+  <h1 data-fr="Bienvenue sur mon portfolio !" data-en="Welcome to my portfolio!">Bienvenue sur mon portfolio !</h1>
+  <p data-fr="Découvrez mes projets et compétences." data-en="Explore my projects and skills."> Bonjour, mon nom est HexaCode. Depuis mon enfance, j'ai toujours aimé l'informatique et le code, c'est ma passion en fait.
+J'ai déjà fait plusieurs projets comme un programme en C++ pour télécharger des vidéos YouTube en format MP4 ou en audio en format MP3.
+J'essaye d'apprendre le mieux possible les langages HTML, CSS, Python.
+Je sais déjà faire deux ou trois trucs en code mais ce n'est pas assez à mon goût.
+Je voudrais vivre de ma passion et faire de mon mieux, voire même gagner de l'argent.
+N'hésitez pas à aller voir tous mes projets que j'ai mis et décrits.
+Enfin bref, je pense que j'ai tout dit.
+Si vous avez des questions, rejoignez mon Discord ou envoyez un message sur GitHub.
+Merci à vous d'avoir lu, et à bientôt ! 😁
+
+ </p>
+</section>
+
+<section id="projects" class="section" data-fr="Projets" data-en="Projects">
+  <h2 data-fr="Mes Projets" data-en="My Projects">Mes Projets</h2>
+  <div class="filters">
+    <button class="active" onclick="filterProjects('all')">Tous</button>
+    <button onclick="filterProjects('html')">HTML</button>
+    <button onclick="filterProjects('py')">python</button>
+    <button onclick="filterProjects('cpp')">cpp</button>
+  </div>
+  <div class="projects">
+    <div class="project-card show" data-cat="html">
+      <h3>Ce site qui est un site de présentation</h3>
+      <p>Le site de présentation et de description de mes site avec parfois un lien pour les rejoindre !</p>
+    </div>
+    <div class="project-card show" data-cat="html">
+      <h3>Controle pc a distance</h3>
+      <p>Un site pour controler mon pc depuis mon telephones (pas encore terminer) mais qui a du style!</p>
+    </div>
+    <div class="project-card show" data-cat="html">
+      <h3>Un site pour lire et regarder des musiques et videos!</h3>
+      <p>C'est un site en local que j'ai fait pour ecouter de la musiques en format mp3 mis avant dans un dossier audio. Je peut aussi lire des video en format mp4 mis dans un dossier video j'y ai acces via l'ip htpp://ip pc:8080 ou 5000 sur autres appareil sur le même réseau wifi ou en localhost sur mon pc.</p>
+    </div>
+    
+    <div class="project-card show" data-cat="cpp">
+      <h3>Un telechargeur de video yt</h3>
+      <p>Grace à ce code, je peux telecharger des videos Youtube avec leurs url completes au format mp4 en video ou au format mp3 en audio !</p>
+    </div>
+     <div class="project-card show" data-cat="Tous">
+      <h3>A venir !!</h3>
+      <p>Je mettrai les prochains code en ligne pour vous les partager et  partager mes capacités !</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="section" data-fr="Contact" data-en="Contact">
+  <h2 data-fr="Contact" data-en="Contact">Contact</h2>
+  <p data-fr="Envoyez-moi un message à legamersdu8@gmail.com" data-en="Send me a message a legamersdu8@gmail.com ">
+    Envoyez-moi un message à legamersdu8@gmail.com ou rejoigner mon server Discord !
+  </p>
+<button class="btn-blue" onclick="window.location.href='https://discord.gg/p7Y9gWEckT'">
+    Rejoindre mon Discord
+  </button>
+</section>
+
+<footer>&copy; 2025 -  Dev XexMods Menu by HexaCode and 𝗘𝘁𝗲𝗿𝗻𝗶𝘁𝘆𝘆</footer>  
+
+<script>
+  // ScrollSpy nav active
+  const sections = document.querySelectorAll("section");
+  const navLinks = document.querySelectorAll("nav a");
+  window.addEventListener("scroll", () => {
+    let current = "";
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop - 100;
+      if (pageYOffset >= sectionTop) current = section.getAttribute("id");
+    });
+    navLinks.forEach((a) => {
+      a.classList.remove("active");
+      if (a.getAttribute("href") === "#" + current) {
+        a.classList.add("active");
+      }
+    });
+  });
+
+  // Filtrage de projets
+  function filterProjects(cat) {
+    document.querySelectorAll(".filters button").forEach(btn => btn.classList.remove("active"));
+    event.target.classList.add("active");
+    document.querySelectorAll(".project-card").forEach(card => {
+      if (cat === "all" || card.dataset.cat === cat) {
+        card.classList.add("show");
+      } else {
+        card.classList.remove("show");
+      }
+    });
+  }
+
+  // Thème clair/sombre
+  function toggleTheme() {
+    document.body.classList.toggle("light");
+  }
+
+  // Langue FR/EN
+  let currentLang = "fr";
+  function toggleLang() {
+    currentLang = currentLang === "fr" ? "en" : "fr";
+    document.querySelectorAll("[data-fr]").forEach(el => {
+      el.textContent = el.getAttribute(`data-${currentLang}`);
+    });
+  }
+</script>
+
+</body>
+</html>
