@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🌌 Portfolio </title>
+  <style>
+    :root {
+      --bg: #0b0f1a;
+      --bg-secondary: #151d2b;
+      --text: #eaefff;
+      --accent: #8ab4f8;
+      --card: #1a2238;
+      --star: radial-gradient(circle, #fff 0%, transparent 80%);
+    }
+
+    html, body {
+      background: var(--bg) url('https://www.transparenttextures.com/patterns/stardust.png');
+      background-size: cover;
+      color: var(--text);
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+      transition: background 0.5s, color 0.5s;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: var(--bg-secondary);
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+      flex-wrap: wrap;
+    }
+
+    header nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    header nav a {
+      color: var(--text);
+      text-decoration: none;
+      margin: 0 10px;
+      font-weight: 500;
+      transition: color 0.3s;
+      opacity: 0;
+      animation: slideIn 0.6s forwards;
+    }
+
+    header nav a:nth-child(1) { animation-delay: 0s; }
+    header nav a:nth-child(2) { animation-delay: 0.1s; }
+    header nav a:nth-child(3) { animation-delay: 0.2s; }
+
+    header nav a.active {
+      color: var(--accent);
+      border-bottom: 2px solid var(--accent);
+    }
+
+    .center-buttons {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .btn {
+      padding: 8px 15px;
+      border-radius: 20px;
+      background: var(--accent);
+      color: black;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .section {
+      padding: 120px 40px 80px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .projects {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .project-card {
+      background: var(--card);
+      padding: 20px;
+      border-radius: 10px;
+      display: none;
+      box-shadow: 0 0 15px rgba(138, 180, 248, 0.1);
+    }
+
+    .project-card.show {
+      display: block;
+    }
+
+    .project-card h3 {
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .filters {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .filters button {
+      padding: 8px 15px;
+      background: transparent;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .filters button.active {
+      background: var(--accent);
+      color: black;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #999;
+    }
+
+    .contact-section {
+      margin-top: auto;
+      padding: 40px 20px;
+      text-align: center;
+      background-color: #111625;
+    }
+
+    .contact-section h2 {
+      margin-bottom: 20px;
+      font-size: 28px;
+      color: #8ab4f8;
+    }
+
+    .btn-blue {
+      display: inline-block;
+      padding: 14px 36px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      background: linear-gradient(135deg, #6f86ff 0%, #8ab4f8 100%);
+      border: none;
+      border-radius: 30px;
+      box-shadow: 0 8px 15px rgba(138, 180, 248, 0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      position: relative;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(-100px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px 20px;
+      }
+
+      .center-buttons {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      header nav {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+      }
+
+      header nav a {
+        margin: 5px 0;
+      }
+
+      .filters {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .filters button {
+        margin: 5px 0;
+      }*
+      .btn-discord {
+  display: inline-block;
+  padding: 14px 36px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #7289da, #5865f2);
+  border: none;
+  border-radius: 30px;
+  box-shadow: 0 8px 15px rgba(114, 137, 218, 0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin-top: 10px;
+  text-decoration: none;
+}
+.btn-discord:hover {
+  transform: scale(1.05);
+}
+@media (max-width: 480px) {
+  header {
+    padding: 10px 15px;
+  }
+
+  header nav a {
+    font-size: 16px;
+    margin: 4px 0;
+  }
+
+  .btn,
+  .filters button,
+  .btn-blue,
+  .btn-discord {
+    padding: 10px 20px;
+    font-size: 14px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .section {
+    padding: 100px 20px 60px;
+  }
+
+  .contact-section h2 {
+    font-size: 24px;
+  }
+
+  .projects {
+    grid-template-columns: 1fr;
+  }
+
+  h1, h2 {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 1.5;
+    text-align: justify;
+  }
+}
+#nav a {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+#nav a:hover {
+  transform: scale(1.05);
+  color: #00aaff; /* Couleur accentuée au survol, modifie si tu veux */
+  z-index: 10;
+}
+.project-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card.show:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 10px 20px rgba(138, 180, 248, 0.3);
+}
+header nav a:hover {
+  transform: scale(1.1);
+  color: var(--accent);
+  text-shadow: 0 0 8px var(--accent);
+  z-index: 10;
+}
+
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav id="nav">
+    <a href="#home" class="active">Accueil</a>
+    <a href="#projects">Projets</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section id="home" class="section">
+  <h1>Bienvenue sur mon portfolio !</h1>
+  <p>Bonjour, mon nom est HexaCode. Depuis mon enfance, j'ai toujours aimé l'informatique et le code, c'est ma passion en fait.
+  J'ai déjà fait plusieurs projets comme un programme en C++ pour télécharger des vidéos YouTube en format MP4 ou en audio en format MP3.
+  J'essaye d'apprendre le mieux possible les langages HTML, CSS, Python.
+  Je sais déjà faire deux ou trois trucs en code mais ce n'est pas assez à mon goût.
+  Je voudrais vivre de ma passion et faire de mon mieux, voire même gagner de l'argent.
+  N'hésitez pas à aller voir tous mes projets que j'ai mis et décrits.
+  Enfin bref, je pense que j'ai tout dit.
+  Si vous avez des questions, rejoignez mon Discord ou envoyez un message sur GitHub.
+  Merci à vous d'avoir lu, et à bientôt ! 😁</p>
+</section>
+
+<section id="projects" class="section">
+  <h2>Mes Projets</h2>
+  <div class="filters">
+    <button class="active" onclick="filterProjects('all')">Tous</button>
+    <button onclick="filterProjects('html')">HTML</button>
+    <button onclick="filterProjects('py')">Python</button>
+    <button onclick="filterProjects('cpp')">C++</button>
+    <button onclick="filterProjects('current')">Projets en cours</button>
+  </div>
+  <div class="projects">
+    <div class="project-card show" data-cat="html">
+      <h3>Ce site qui est un site de présentation</h3>
+      <p>Le site de présentation et de description de mes site avec parfois un lien pour les rejoindre !</p>
+    </div>
+    <div class="project-card show" data-cat="html">
+      <h3>Controle pc a distance</h3>
+      <p>Un site pour controler mon pc depuis mon telephones (pas encore terminer) mais qui a du style!</p>
+    </div>
+    <div class="project-card show" data-cat="html">
+      <h3>Un site pour lire et regarder des musiques et videos!</h3>
+      <p>C'est un site en local que j'ai fait pour ecouter de la musiques en format mp3 mis avant dans un dossier audio. Je peut aussi lire des video en format mp4 mis dans un dossier video j'y ai acces via l'ip htpp://ip pc:8080 ou 5000 sur autres appareil sur le même réseau wifi ou en localhost sur mon pc.</p>
+    </div>
+    
+    <div class="project-card show" data-cat="cpp">
+      <h3>Un telechargeur de video yt</h3>
+      <p>Grace à ce code, je peux telecharger des videos Youtube avec leurs url completes au format mp4 en video ou au format mp3 en audio !</p>
+    </div>
+     <div class="project-card show" data-cat="current">
+      <h3>A venir</h3>
+      <p>Le prochains projet est XexMods mon site ou je mettrais mes programme et les Mod Menu de 𝗘𝘁𝗲𝗿𝗻𝗶𝘁𝘆𝘆 et les miens si j'en fait.</p>
+      <a href=" " class="btn-blue">Voir mon site XexMods (a venir)</a>
+    </div>
+     <div class="project-card show" data-cat="Tous">
+      <h3>A venir !!</h3>
+      <p>Je mettrai les prochains code en ligne pour vous les partager et  partager mes capacités !</p>
+    </div>
+
+  </div>
+</section>
+
+<section id="contact" class="contact-section">
+  <h2>Contactez-moi</h2>
+  <a href="https://github.com/" class="btn-blue">Voir mon GitHub</a>
+  <a href=" " class="btn-blue">Voir mon site XexMods (a venir)</a>
+  <p style="margin: 20px 0 10px; color: #ccc;">Ou discutez et poser vos question sur Discord :</p>
+  <a href="https://discord.gg/p7Y9gWEckT" class="btn-blue" target="_blank">Rejoindre mon server Discord</a>
+</section>
+
+
+<footer>
+  &copy; 2025 HexaCode - Tous droits réservés.
+</footer>
+
+<script>
+  function filterProjects(cat) {
+    const cards = document.querySelectorAll(".project-card");
+    cards.forEach(card => {
+      const match = cat === 'all' || card.dataset.cat === cat;
+      card.classList.toggle('show', match);
+    });
+
+    document.querySelectorAll('.filters button').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+
+  function toggleTheme() {
+    document.body.classList.toggle('light');
+  }
+</script>
+
+</body>
+</html>
